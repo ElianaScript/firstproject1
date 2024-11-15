@@ -79,6 +79,10 @@ footer span {
     border-radius: 0.5em;
 }
 
+#myModal{
+    display: none;
+
 #error {
     color: red;
+
 }

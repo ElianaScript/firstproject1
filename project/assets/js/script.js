@@ -1,4 +1,4 @@
-const submitButton = document.querySelector("#submit");
+const submitButton = document.querySelector("#conditional-btn")
 const clearButton = document.querySelector("#clear");
 const movieNameInput = document.querySelector("#movie-name");
 const genreInput = document.querySelector("#genre");
@@ -18,8 +18,20 @@ const formCounter = function () {
     localStorage.setItem('count', JSON.stringify(prevCount))
     return prevCount;
 }
+submitButton.addEventListener("click", function() {
 
-submitEl.addEventListener('click', function(){
+    const condition = true; 
+
+    if (condition) {
+
+        const modalElement = document.getElementById("conditionalModal");
+
+        const modal = new bootstrap.Modal(modalElement);
+
+        modal.show();
+    }
+});
+submitButton.addEventListener('click', function(){
     if (!movieNameInput.value || !genreInput.value || !starRatingInput.value){
         errorElement.id = 'error';
         errorElement.textContent = "";
