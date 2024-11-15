@@ -1,27 +1,14 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const submitButton = document.getElementById("submit");
-    const clearButton = document.getElementById ("clear");
-    const movieInput = document.getElementById("movie-name");
-    const genreSelect = document.getElementById("genre");
-    const starSelect = document.getElementById("rating");
+const submitbutton = document.querySelector("#conditional-btn")
+submitbutton.addEventListener("click", function() {
 
-    submitButton.addEventListener("click", function(event) {
-        event.preventDefault();
+    const condition = true; 
 
-        const movie =movieInput.value.trim();
-        const genre = genreSelect.value;
-        const rating = ratingSelect.value;
+    if (condition) {
 
-        if (movie && genre && rating) {
-            alert(`You submitted: \nMovie: ${movie}\nGenre: ${genre}\nRating ${rating} rating`);
-        } else {
-            alert("Please fill in all fields before submitting!");
-        }
-    });
+        const modalElement = document.getElementById("conditionalModal");
 
-    clearButton.addEventListener("click", function() {
-        movieInput.value = "";
-        genreSelect.selectedIndex = 0;
-        ratingSelect.selectedIndex = 0;
-    });
+        const modal = new bootstrap.Modal(modalElement);
+
+        modal.show();
+    }
 });
