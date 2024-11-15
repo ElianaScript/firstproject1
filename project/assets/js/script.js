@@ -1,3 +1,4 @@
+
 // Write function to get movie input, genre, and rating into localStorage
 // Write function to alert user to input movie name if movie name, genre, or rating is empty
 // Write function to form-counter to count everytime user submits
