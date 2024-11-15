@@ -1,27 +1,38 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const submitButton = document.getElementById("submit");
-    const clearButton = document.getElementById ("clear");
-    const movieInput = document.getElementById("movie-name");
-    const genreSelect = document.getElementById("genre");
-    const starSelect = document.getElementById("rating");
 
-    submitButton.addEventListener("click", function(event) {
-        event.preventDefault();
+// Write function to get movie input, genre, and rating into localStorage
+// Write function to alert user to input movie name if movie name, genre, or rating is empty
+// Write function to form-counter to count everytime user submits
+const formEl = document.getElementById('form-counter');
+const movieEl = document.getElementById('movie-name');
+const genreEl = document.getElementById('genre');
+const rateEl = document.getElementById('star-rating');
+const submitEl = document.getElementById('submit');
+const errorElement = document.createElement('p');
 
-        const movie =movieInput.value.trim();
-        const genre = genreSelect.value;
-        const rating = ratingSelect.value;
+const formCounter = function () {
+    // Everytime formCounter is called, the form counter goes up by 1
+    let prevCount = JSON.parse(localStorage.getItem('count'));
+    if (prevCount < 10) {
+        prevCount++;
+    }
+    localStorage.setItem('count', JSON.stringify(prevCount))
+    return prevCount;
+}
 
-        if (movie && genre && rating) {
-            alert(`You submitted: \nMovie: ${movie}\nGenre: ${genre}\nRating ${rating} rating`);
-        } else {
-            alert("Please fill in all fields before submitting!");
-        }
-    });
-
-    clearButton.addEventListener("click", function() {
-        movieInput.value = "";
-        genreSelect.selectedIndex = 0;
-        ratingSelect.selectedIndex = 0;
-    });
+submitEl.addEventListener('click', function(){
+    if (!movieEl.value || !genreEl.value || !rateEl.value){
+        errorElement.id = 'error';
+        errorElement.textContent = "";
+        errorElement.textContent = 'Please fill out all fields';
+        formEl.appendChild(errorElement);
+    } else if (document.getElementById('error')){
+        errorElement.remove();
+    } else {
+        formEl.textContent = `${formCounter()}/10`
+    }
 });
+
+window.onload = function() {
+    localStorage.setItem('count', (1));
+    formEl.textContent = `1/10`
+}
