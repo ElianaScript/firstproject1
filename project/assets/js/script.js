@@ -3,10 +3,39 @@ const clearButton = document.querySelector("#clear");
 const movieNameInput = document.querySelector("#movie-name");
 const genreInput = document.querySelector("#genre");
 const starRatingInput = document.querySelector("#rating");
+const formEl = document.getElementById('form-counter');
+const errorElement = document.createElement('p');
 
 let moviesList =  JSON.parse(localStorage.getItem("moviesList")) || [];
 let movieCount = moviesList.length;
 const maxMovies = 10;
+const formCounter = function () {
+    // Everytime formCounter is called, the form counter goes up by 1
+    let prevCount = JSON.parse(localStorage.getItem('count'));
+    if (prevCount < 10) {
+        prevCount++;
+    }
+    localStorage.setItem('count', JSON.stringify(prevCount))
+    return prevCount;
+}
+
+submitEl.addEventListener('click', function(){
+    if (!movieNameInput.value || !genreInput.value || !starRatingInput.value){
+        errorElement.id = 'error';
+        errorElement.textContent = "";
+        errorElement.textContent = 'Please fill out all fields';
+        formEl.appendChild(errorElement);
+    } else if (document.getElementById('error')){
+        errorElement.remove();
+    } else {
+        formEl.textContent = `${formCounter()}/10`
+    }
+});
+
+window.onload = function() {
+    localStorage.setItem('count', (1));
+    formEl.textContent = `1/10`
+}
 
 function updateMovieCount() {
     return moviesList.length;
