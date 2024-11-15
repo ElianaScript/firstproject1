@@ -1,27 +1,83 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const submitButton = document.getElementById("submit");
-    const clearButton = document.getElementById ("clear");
-    const movieInput = document.getElementById("movie-name");
-    const genreSelect = document.getElementById("genre");
-    const starSelect = document.getElementById("rating");
+const submitButton = document.querySelector("#submit");
+const clearButton = document.querySelector("#clear");
+const movieNameInput = document.querySelector("#movie-name");
+const genreInput = document.querySelector("#genre");
+const starRatingInput = document.querySelector("#rating");
 
-    submitButton.addEventListener("click", function(event) {
-        event.preventDefault();
+let moviesList =  JSON.parse(localStorage.getItem("moviesList")) || [];
+let movieCount = moviesList.length;
+const maxMovies = 10;
 
-        const movie =movieInput.value.trim();
-        const genre = genreSelect.value;
-        const rating = ratingSelect.value;
+function updateMovieCount() {
+    return moviesList.length;
+}
 
-        if (movie && genre && rating) {
-            alert(`You submitted: \nMovie: ${movie}\nGenre: ${genre}\nRating ${rating} rating`);
-        } else {
-            alert("Please fill in all fields before submitting!");
-        }
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const movie =movieNameInput.value.trim();
+    const genre = genreInput.value;
+    const star = starRatingInput.value;
+
+    if (movie && genre && star) {
+        moviesList.push({movie, genre, rating: star});
+        movieCount++;
+        localStorage.setItem("moviesList", JSON.stringify(moviesList));
+
+        alert(`You submitted \nMovie: ${movie}\nGenre: ${genre}\nRating: ${star} star(s)`);
+
+        movieNameInput.value ="";
+        genreInput.selectedIndex = 0;
+        starRatingInput.selectedIndex = 0;
+
+    if (movieCount === maxMovies) {
+        displayMoviesList(moviesList);
+        submitButton.disabled = true;
+        storeMoviesList(moviesList);
+    } else {
+        alert(`You have submitted ${movieCount} movies. Please submit ${maxMovies - movieCount} more`);
+    }
+    } else {
+        alert("Please fill in all fields before submitting!");
+    }
     });
 
     clearButton.addEventListener("click", function() {
-        movieInput.value = "";
-        genreSelect.selectedIndex = 0;
-        ratingSelect.selectedIndex = 0;
+        movieNameInput.value = "";
+        genreInput.selectedIndex = 0;
+        starRatingInput.selectedIndex = 0;
     });
-});
+
+function displayMoviesList(movies) {
+    const moviesListContainer = document.getElementById("movie-list");
+    moviesListContainer.innerHTML = "";
+
+    movies.forEach((movieObj, index) => {
+        const movieElement = document.createElement("p");
+        movieElement.textContent =`${index +1}. Movie: ${movieObj.movie}, Genre: ${movieObj.genre}, Rating: ${movieObj.rating} star(s).`;
+        moviesListContainer.appendChild(movieElement);
+    });
+}
+
+    function storeMoviesList(movies) {
+        let movieGenre = {};
+
+        movies.forEach ((movieObj) =>  {
+            if  (movieGenre[movieObj.genre]) {
+                movieGenre[movieObj.genre]++;
+            } else {
+                movieGenre[movieObj.genre] = 1;
+            }
+        });
+
+        const sortedGenres = Object.entries(movieGenre).sort((a,b) => b[1] - a[1]);
+        const topGenres = sortedGenres.slice(0,3).map(genre => genre[0]);
+
+        let movieSummary = `The top three movie genres you have selected are: ${topGenres.join(",")}.\n\n`;
+
+        movies.forEach((movieObj, index) => {
+            movieSummary += `${index + 1}. Movie: ${movieObj.movie}, Genre: ${movieObj.genre}, Rating: ${movieObj.rating} star(s)\n`;
+        });
+    
+    alert(movieSummary);
+ }
