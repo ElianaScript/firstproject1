@@ -20,6 +20,7 @@ const errorFunc = () => {
         errorElement.textContent = "Please fill out all fields.";
         if (!document.getElementById("error")) {
             formEl.appendChild(errorElement);
+            document.getElementById('error').style.color = '#FF0000';
         }
     } else if (document.getElementById("error")) {
         errorElement.remove();
