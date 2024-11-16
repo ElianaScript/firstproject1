@@ -6,17 +6,14 @@ const formEl = document.getElementById("form-counter");
 const errorElement = document.createElement("p");
 const submitButton = document.querySelector("#conditional-btn");
 
-// get moviesList from local storage or create an array
 let moviesList = JSON.parse(localStorage.getItem("moviesList")) || [];
-let movieCount = 0; // Tracks movies in the current session without local storage
+let movieCount = 1;
 const maxMovies = 5;
 
-// make the form counter
 const initializeFormCounter = () => {
-    formEl.textContent = `${movieCount+1}/${maxMovies}`;
+    formEl.textContent = `${movieCount}/${maxMovies}`;
 };
 
-// error handler
 const errorFunc = () => {
     if (!movieNameInput.value || !genreInput.value || !starRatingInput.value) {
         errorElement.id = "error";
@@ -39,39 +36,28 @@ submitButton.addEventListener("click", function (event) {
     errorFunc();
 
     if (movie && genre && star) {
-        if (movieCount < maxMovies) {
-            // add movie to the current session without local storage
-            moviesList.push({ movie, genre, rating: star });
-            movieCount++;
+        moviesList.push({ movie, genre, rating: parseInt(star) });
+        movieCount++;
 
-            // save the updated list to localStorage
-            localStorage.setItem("moviesList", JSON.stringify(moviesList));
+        localStorage.setItem("moviesList", JSON.stringify(moviesList));
 
-            // reset form fields
-            movieNameInput.value = "";
-            genreInput.selectedIndex = 0;
-            starRatingInput.selectedIndex = 0;
+        movieNameInput.value = "";
+        genreInput.selectedIndex = 0;
+        starRatingInput.selectedIndex = 0;
 
-            // update the counter display
-            formEl.textContent = `${movieCount}/${maxMovies}`;
+        formEl.textContent = `${movieCount <= maxMovies ? movieCount : 1}/${maxMovies}`;
 
-            // show modal and reset counter if the limit is reached
-            if (movieCount === maxMovies) {
-                storeMoviesList(moviesList);
+        if (movieCount > maxMovies) {
+            updateRankings(moviesList);
 
-                const modalElement = document.getElementById("conditionalModal");
-                const modal = new bootstrap.Modal(modalElement);
-                modal.show();
+            const modalElement = document.getElementById("conditionalModal");
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
 
-                // reset the counter for the next batch of movies 
-                movieCount = 0;
-                initializeFormCounter();
+            movieCount = 1;
+            initializeFormCounter();
 
-                // re-enable the submit button
-                submitButton.disabled = false;
-            }
-        } else {
-            alert("You have reached the maximum limit of 5 movies in this batch.");
+            submitButton.disabled = false;
         }
     }
 });
@@ -82,7 +68,7 @@ clearButton.addEventListener("click", function () {
     starRatingInput.selectedIndex = 0;
 });
 
-function storeMoviesList(movies) {
+function updateRankings(movies) {
     let movieGenre = {};
 
     movies.forEach((movieObj) => {
@@ -96,9 +82,11 @@ function storeMoviesList(movies) {
     const sortedGenres = Object.entries(movieGenre).sort((a, b) => b[1] - a[1]);
     const topGenres = sortedGenres.slice(0, 3).map((genre) => genre[0]);
 
-    let movieSummary = `Your Top Movies Are: ${topGenres.join(", ")}.<br><br>`;
+    const sortedMovies = [...movies].sort((a, b) => b.rating - a.rating);
 
-    movies.forEach((movieObj, index) => {
+    let movieSummary = `Your Top Genres Are: ${topGenres.join(", ")}.<br><br>`;
+    movieSummary += `Top Movies (Sorted by Rating):<br>`;
+    sortedMovies.forEach((movieObj, index) => {
         movieSummary += `${index + 1}. Movie: ${movieObj.movie}, Genre: ${movieObj.genre}, Rating: ${movieObj.rating} star(s).<br>`;
     });
 
@@ -108,10 +96,4 @@ function storeMoviesList(movies) {
 
 window.onload = function () {
     initializeFormCounter();
-
-    if (moviesList.length > 0) {
-        const modalElement = document.getElementById("conditionalModal");
-        const modal = new bootstrap.Modal(modalElement);
-        storeMoviesList(moviesList);
-    }
 };
