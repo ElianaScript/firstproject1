@@ -14,9 +14,9 @@ Select five of the most recent movies you have seen recently. Put them into the 
 
 ## Credits 
 
-⭐ Nolan Grossi - nolangrossi
-⭐ Eliana Liantonio - ElianaScript
-⭐ Brandon Lopez - Zepolean
+- ⭐ **Nolan Grossi** - nolangrossi
+- ⭐ **Eliana Liantonio** - ElianaScript
+- ⭐ **Brandon Lopez** - Zepolean
 
 ## License 
 
