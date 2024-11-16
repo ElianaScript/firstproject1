@@ -1,5 +1,7 @@
 <first-project-1>
 
+## Description
+
 # Have you ever wondered what genre of media you tend to prefer? Do you ever question what to watch next after finishing a great movie?  Genrefy is the exact website to help with your search. At our website, you list off five movies that will ask you to select the genre it would fall under and a rating. After submitting five movies, the website provides you with the genre that you watched the most of and a log of how you rated each movie. We built this project in order to help people find out what they like best, and how to find the next piece of media they could consume. Our motivation comes from our own interest in different movies and frustration that comes with wondering "Well now what do I watch?". In this project, we learned best how to pair program with one another; we learned how to deploy our site and make it live. We learned how to write JavaScript code to make our site interactive, and then we learned that it look several sessions of debugging to make it perfect for our users. In the end, we hope that this site is helpful for you to use and that our hard work paid off!
 
 ## Installation 
