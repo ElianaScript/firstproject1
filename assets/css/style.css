@@ -1,0 +1,88 @@
+:root {
+    --timberwolf: #d6d2d2ff;
+    --pale-purple: #f1e4f3ff;
+    --orchid-pink: #f4bbd3ff;
+    --persian-pink: #f686bdff;
+    --cyclamen: #fe5d9fff;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+header {
+    background-image: linear-gradient(0deg, rgba(0,0,0,100%) 0%, rgba(199,66,66,100%) 60%);
+    border-bottom: solid grey 2px;
+    color: whitesmoke;
+}
+
+#hero-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,1) 80%), url('../images/hero.jpg');
+    background-size: cover;
+    opacity: 100%;
+    /* Add blur filter to background image */
+}
+
+h2 {
+    margin-bottom: 0.5em;
+    font-size: 1.5em;
+}
+
+section > h2, ul {
+    color: black;
+}
+
+button {
+    width: 5em;
+    border-radius: 1em;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 0;
+    color: whitesmoke;
+    border-top: solid grey 2px;
+    background-image: linear-gradient(180deg, rgba(0,0,0,50%) 10%, rgba(199,66,66,100%) 100%);
+    text-align: center;
+}
+
+footer span {
+    font-weight: 700;
+}
+
+.header-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.instruct ul {
+    padding-left: 0;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+.card {
+    background-color: var(--timberwolf);
+    border-radius: 0.5em;
+}
+
+#myModal{
+    display: none;
+
+#error {
+    color: red;
+
+}
