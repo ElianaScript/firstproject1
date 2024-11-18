@@ -5,6 +5,7 @@ const starRatingInput = document.querySelector("#star-rating");
 const formEl = document.getElementById("form-counter");
 const errorElement = document.createElement("p");
 const submitButton = document.querySelector("#conditional-btn");
+const showButton = document.querySelector('#show-modal');
 
 let moviesList = JSON.parse(localStorage.getItem("moviesList")) || [];
 let movieCount = 1;
@@ -49,10 +50,11 @@ submitButton.addEventListener("click", function (event) {
         formEl.textContent = `${movieCount <= maxMovies ? movieCount : 1}/${maxMovies}`;
 
         if (movieCount > maxMovies) {
+
             updateRankings(moviesList);
 
-            const modalElement = document.getElementById("conditionalModal");
-            const modal = new bootstrap.Modal(modalElement);
+            let modalElement = document.getElementById("conditionalModal");
+            let modal = new bootstrap.Modal(modalElement);
             modal.show();
 
             movieCount = 1;
@@ -69,6 +71,12 @@ clearButton.addEventListener("click", function () {
     starRatingInput.selectedIndex = 0;
 });
 
+showButton. addEventListener("click", function (){
+    updateRankings(moviesList)
+    let modalElement = document.getElementById("conditionalModal");
+    let modal = new bootstrap.Modal(modalElement);
+    modal.show();
+});
 function updateRankings(movies) {
     let movieGenre = {};
 
