@@ -47,7 +47,7 @@ submitButton.addEventListener("click", function (event) {
         genreInput.selectedIndex = 0;
         starRatingInput.selectedIndex = 0;
 
-        formEl.textContent = `${movieCount <= maxMovies ? movieCount : 1}/${maxMovies}`;
+        formEl.textContent = `${movieCount}/${maxMovies}`;
 
         if (movieCount > maxMovies) {
 
@@ -71,11 +71,11 @@ clearButton.addEventListener("click", function () {
     starRatingInput.selectedIndex = 0;
 });
 
-showButton. addEventListener("click", function (){
-    updateRankings(moviesList)
+showButton.addEventListener("click", function (){
     let modalElement = document.getElementById("conditionalModal");
     let modal = new bootstrap.Modal(modalElement);
     modal.show();
+    updateRankings(moviesList);
 });
 function updateRankings(movies) {
     let movieGenre = {};
